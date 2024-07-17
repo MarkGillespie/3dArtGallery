@@ -3,6 +3,14 @@ import gpytoolbox as gpy
 import numpy as np
 
 def off_to_obj(filename):
+    """
+    Create .obj file from .off file
+
+    Parameters
+    ----------
+    filename
+        File's name in meshes folder
+    """
     THIS_DIR = os.path.dirname(os.path.abspath(__file__))
     DATA_DIR = os.path.join(THIS_DIR, "..", "..", "meshes")
     READ_PATH = DATA_DIR + "\\" + filename + '.off'

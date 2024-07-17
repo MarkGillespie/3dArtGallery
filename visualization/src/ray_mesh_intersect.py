@@ -2,6 +2,32 @@ import numpy as np
 import gpytoolbox as gpy
 
 def ray_mesh_intersect(R_V, rays, V, F):
+    """
+    Find intersection points and intersected faces
+    Work best with rand_ray
+
+    Parameters
+    ----------
+    R_V
+        Numpy array of vertices coordinates.
+
+    rays
+        Numpy array of the direction of rays shooting out of each vertex in R_V
+
+    V
+        Mesh's vertices' coordinates
+
+    F
+        Mesh's faces' vertices list
+
+    Returns
+    -------
+    C_V
+        numpy array of intersection points' coordinates
+        
+    intersected
+        |F| array of 0 or 1 where 1 means this face is intersected with some rays.
+    """
     ts, ids, _ = gpy.ray_mesh_intersect(R_V, rays, V, F)
 
     C_V = []
@@ -17,6 +43,32 @@ def ray_mesh_intersect(R_V, rays, V, F):
     return C_V, intersected
 
 def ray_mesh_intersect_2(R_V, R_E, V, F):
+    """
+    Find intersection points and intersected faces
+    Work best with rand_rays
+
+    Parameters
+    ----------
+    R_V
+        Numpy array of vertices coordinates.
+
+    R_E
+        numpy array of rays' edges' vertice list
+
+    V
+        Mesh's vertices' coordinates
+
+    F
+        Mesh's faces' vertices list
+
+    Returns
+    -------
+    C_V
+        numpy array of intersection points' coordinates
+        
+    intersected
+        |F| array of 0 or 1 where 1 means this face is intersected with some rays.
+    """
     new_R_V = []
     rays = []
     for e in R_E:

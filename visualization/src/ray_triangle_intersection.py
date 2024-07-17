@@ -1,6 +1,25 @@
 import numpy as np
 
 def ray_triangle_intersection(A, B, C, origin = np.array([0, 0, 0]), ray = np.array([1, 0, 0])):
+    """
+    Find the intersection between a ray and a triangle
+
+    Parameters
+    ----------
+    A, B, C (Required)
+        Coordinate of the triangle
+
+    origin
+        The coordinate of the start point of the ray
+
+    ray
+        The direction of the ray
+
+    Returns
+    -------
+    P
+        The intersection point (if exists), otherwise return [].
+    """
     ## Ray
     e_ = ray/np.linalg.norm(ray)        # Unit vector (versor) of e => ê
 

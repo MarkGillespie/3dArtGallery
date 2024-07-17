@@ -3,6 +3,22 @@ import gpytoolbox as gpy
 import numpy as np
 
 def read_skeleton(filename):
+    """
+    Read skeleton from file 
+
+    Parameters
+    ----------
+    filename
+        File's name in meshes folder
+
+    Returns
+    ----------
+    V
+        Skeleton's vertices' coordinates
+
+    E
+        Skeleton's edges' vertex list
+    """
     THIS_DIR = os.path.dirname(os.path.abspath(__file__))
     DATA_DIR = os.path.join(THIS_DIR, "..", "..", "meshes")
     READ_PATH = DATA_DIR + "\\" + filename + '.cg'

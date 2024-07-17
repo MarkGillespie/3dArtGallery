@@ -1,6 +1,44 @@
 import polyscope as ps
 
 def display_mesh(V, F, R_V = [], R_E = [], intersected = [], C_V = [], S_V = [], S_E = [], S_P = [], vecs = [], ray_length = 1):
+    """
+    Display the mesh
+
+    Parameters
+    ----------
+    V (Required)
+        Mesh's vertices' coordinates
+
+    F (Required)
+        Mesh's faces' vertex list
+
+    R_V
+        Rays' vertices' coordiantes
+
+    R_E
+        Rays' edges' vertex list
+
+    intersected
+        |F| array of 0 or 1 where 1 means this face is intersected with some rays.
+
+    C_V
+        Intersection points' coordiantes
+
+    S_V
+        Skeleton's vertices' coordinates
+
+    S_E
+        Skeleton's edges' vertex list
+
+    S_P
+        Skeleton point sampling's vertices' coordinates
+
+    vecs
+        Numpy array of random rays shooting out of each point of the skeleton's vertices
+
+    ray_length
+        length of vecs (default to 1)
+    """
     ps.init()
     ps.reset_camera_to_home_view()
 

@@ -1,6 +1,26 @@
 import numpy as np
 
 def skeleton_points_uniform_sampling(V, E, points_per_edge = 9):
+    """
+    Skeleton Points Sampling by breaking an edge to many equal pieces
+
+    Parameters
+    ----------
+    V
+        Skeleton's vertices' coordinates
+
+    E
+        Skeleton's edges' vertex list
+
+    points_per_edge
+        The number of points per edge excluding the start and end points
+        (Default to 9)
+
+    Returns
+    -------
+    S_P
+        The numpy array of points
+    """
     P = []
 
     for edge in E:
@@ -9,7 +29,27 @@ def skeleton_points_uniform_sampling(V, E, points_per_edge = 9):
 
     return np.concatenate((np.array(P), V), axis=0)
 
-def skeleton_points_fixed_length_sampling(V, E, target_length):
+def skeleton_points_fixed_length_sampling(V, E, target_length = 1):
+    """
+    Skeleton Points Sampling by break an edge to be as close to the target_length as possible
+
+    Parameters
+    ----------
+    V
+        Skeleton's vertices' coordinates
+
+    E
+        Skeleton's edges' vertex list
+
+    target_length
+        Self explained (Default to 1)
+
+    Returns
+    -------
+    S_P
+        The numpy array of points
+        If target_length is too big, return V
+    """
     P = []
 
     for edge in E:
