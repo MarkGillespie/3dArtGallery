@@ -1,34 +1,37 @@
-#Here is the code for finding if a ray intersects a triangle and, if so, where.
-#As an example, it currently has the following values input:
-#ray origin: O = [0,0,0]
-#ray direction: e = [0.1,0.1,1]
-#triangle verticies:
-#A = [0 , 1, 1.50]   
-#B = [1 , 0, 1.25]
-#C = [-1, 0, 1.00]
-import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
-np.seterr(divide='ignore', invalid='ignore')
-plt.rcParams['figure.figsize'] = (16, 4)
+from mpl_toolkits.mplot3d import Axes3D
+
+# np.seterr(divide='ignore', invalid='ignore')
+# plt.rcParams['figure.figsize'] = (16, 4)
+
 ## Ray
-O = np.array([0, 0, 0])         # Origin pont
-e = np.array([0.1, 0.1, 1])     # Ray direction
+O = np.array([0, 0, 0])         # Origin point
+e = np.array([0.1, 0.8, 1])     # Ray direction
 e_ = e/np.linalg.norm(e)        # Unit vector (versor) of e => ê
+
+
 # Triangle 
-A = np.array([0 , 1, 1.50])      # Point A
-B = np.array([1 , 0, 1.25])      # Point B
+A = np.array([4 , 1, 1.50])      # Point A
+B = np.array([6 , 7.976, 1.25])      # Point B
 C = np.array([-1, 0, 1.00])      # Point C
+
 AB = B - A               # Oriented segment A to B
 AC = C - A               # Oriented segment A to C
 n = np.cross(AB, AC)     # Normal vector
 n_ = n/np.linalg.norm(n) # Normalized normal
+
 # Using the point A to find d
 d = - np.dot(n_, A)
+
+
 # Finding parameter t
 t = - (np.dot(n_, O) + d)/np.dot(n_, e_)
+
 # Finding P
 P = O + t*e_
+
+
 # Get the resulting vector for each vertex
 # following the construction order
 Pa = np.dot(np.cross(B - A, P - A), n_)
@@ -40,12 +43,12 @@ if(t < 0):
     # direction from the ray) or the triangle is behind the ray origin
     print('Backface intersection!')
 
-elif(Pa < 0 and Pb < 0 and Pc < 0):
+if (Pa >= 0 and Pb >= 0 and Pc >= 0):
+    print(f'Intersections at {P}')
+else:
     print('Intersection point is outside the triangle')
 
-else:
-    print(f'Intersections at {P}')
-import numpy as np
+
 class Point:
     def __init__(self, x, y, z):
         self.x = x
@@ -60,6 +63,10 @@ class Vector:
 
 def Dot(v1, v2):
     return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z
+
+def Array_to_point(arr): 
+    return Point(arr[0], arr[1], arr[2])
+
 def Barycentric(P, A, B, C):
     v0 = Vector(B.x - A.x, B.y - A.y, B.z - A.z)
     v1 = Vector(C.x - A.x, C.y - A.y, C.z - A.z)
@@ -81,8 +88,27 @@ def Barycentric(P, A, B, C):
 # Example usage:
 if __name__ == "__main__":
        
+
+    A_ = Array_to_point(A)      # Point A
+    B_ = Array_to_point(B)      # Point B
+    C_ = Array_to_point(C)      # Point C
+    P_ = Array_to_point(P)
     # Compute barycentric coordinates
-    u, v, w = Barycentric(P, A, B, C)
+    u, v, w = Barycentric(P_, A_, B_, C_)
 
     # Print results
     print(f"Barycentric coordinates (u, v, w): ({u}, {v}, {w})")
+    print(f"check sum of barycentric coordinates: {u + v + w}")
+
+##Visualization
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+# Triangle vertices
+triangle = np.array([A, B, C, A])
+ax.plot(triangle[:, 0], triangle[:, 1], triangle[:, 2], 'r-')  # Triangle edges
+# Ray
+ray_length = 10
+ray_end = O + ray_length * e_
+ax.plot([O[0], ray_end[0]], [O[1], ray_end[1]], [O[2], ray_end[2]], 'b-')  # Ray
+plt.show()
