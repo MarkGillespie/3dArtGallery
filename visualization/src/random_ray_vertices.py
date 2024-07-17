@@ -3,11 +3,15 @@ import numpy as np
 import polyscope as ps
 from src.read_skeleton import read_skeleton
 
-def rand_ray(S_V):
+def rand_ray(S_V, ray_length = 1):
   num_vert = len(S_V)
-  vecs = np.random.rand(num_vert, 3) - 0.5
+  vecs = []
   
-  return vecs
+  for _ in range(num_vert):
+    v = np.random.rand(3) - 0.5
+    vecs.append(v / np.linalg.norm(v))
+  
+  return np.array(vecs)
 
 def rand_rays(S_V, num_rays = 1, ray_length = 1):
   num_vert = len(S_V)
