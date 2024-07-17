@@ -1,0 +1,88 @@
+#Here is the code for finding if a ray intersects a triangle and, if so, where.
+#As an example, it currently has the following values input:
+#ray origin: O = [0,0,0]
+#ray direction: e = [0.1,0.1,1]
+#triangle verticies:
+#A = [0 , 1, 1.50]   
+#B = [1 , 0, 1.25]
+#C = [-1, 0, 1.00]
+import matplotlib
+import matplotlib.pyplot as plt
+import numpy as np
+np.seterr(divide='ignore', invalid='ignore')
+plt.rcParams['figure.figsize'] = (16, 4)
+## Ray
+O = np.array([0, 0, 0])         # Origin pont
+e = np.array([0.1, 0.1, 1])     # Ray direction
+e_ = e/np.linalg.norm(e)        # Unit vector (versor) of e => ê
+# Triangle 
+A = np.array([0 , 1, 1.50])      # Point A
+B = np.array([1 , 0, 1.25])      # Point B
+C = np.array([-1, 0, 1.00])      # Point C
+AB = B - A               # Oriented segment A to B
+AC = C - A               # Oriented segment A to C
+n = np.cross(AB, AC)     # Normal vector
+n_ = n/np.linalg.norm(n) # Normalized normal
+# Using the point A to find d
+d = - np.dot(n_, A)
+# Finding parameter t
+t = - (np.dot(n_, O) + d)/np.dot(n_, e_)
+# Finding P
+P = O + t*e_
+# Get the resulting vector for each vertex
+# following the construction order
+Pa = np.dot(np.cross(B - A, P - A), n_)
+Pb = np.dot(np.cross(C - B, P - B), n_)
+Pc = np.dot(np.cross(A - C, P - C), n_)
+
+if(t < 0):
+    # Means that the triangle has the normal in the opposite direction (same
+    # direction from the ray) or the triangle is behind the ray origin
+    print('Backface intersection!')
+
+elif(Pa < 0 and Pb < 0 and Pc < 0):
+    print('Intersection point is outside the triangle')
+
+else:
+    print(f'Intersections at {P}')
+import numpy as np
+class Point:
+    def __init__(self, x, y, z):
+        self.x = x
+        self.y = y
+        self.z = z
+
+class Vector:
+    def __init__(self, x, y, z):
+        self.x = x
+        self.y = y
+        self.z = z
+
+def Dot(v1, v2):
+    return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z
+def Barycentric(P, A, B, C):
+    v0 = Vector(B.x - A.x, B.y - A.y, B.z - A.z)
+    v1 = Vector(C.x - A.x, C.y - A.y, C.z - A.z)
+    v2 = Vector(P.x - A.x, P.y - A.y, P.z - A.z)
+
+    d00 = Dot(v0, v0)
+    d01 = Dot(v0, v1)
+    d11 = Dot(v1, v1)
+    d20 = Dot(v2, v0)
+    d21 = Dot(v2, v1)
+
+    denom = d00 * d11 - d01 * d01
+
+    v = (d11 * d20 - d01 * d21) / denom
+    w = (d00 * d21 - d01 * d20) / denom
+    u = 1.0 - v - w
+
+    return u, v, w
+# Example usage:
+if __name__ == "__main__":
+       
+    # Compute barycentric coordinates
+    u, v, w = Barycentric(P, A, B, C)
+
+    # Print results
+    print(f"Barycentric coordinates (u, v, w): ({u}, {v}, {w})")
