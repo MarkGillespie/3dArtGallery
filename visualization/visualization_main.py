@@ -17,7 +17,7 @@ S_V, S_E = read_skeleton(filename)
 S_P = skeleton_points_fixed_length_sampling(S_V, S_E, 5e-3)
 vecs = rand_ray(S_V)
 # R_V, R_E = rand_rays(S_P, 1, 1)
-R_V, R_E = point_explode(np.array([0, 0, 0]), 25, 25)
+R_V, R_E = point_explode(S_V[np.random.randint(len(S_V))], 25, 25)
 C_V, intersected = ray_mesh_intersect_2(R_V, R_E, V, F)
 
 display_mesh(V, F, C_V = C_V, intersected = intersected, R_V = R_V, R_E = R_E, S_V = S_V, S_E = S_E, S_P = S_P, vecs = vecs, ray_length = 1)
