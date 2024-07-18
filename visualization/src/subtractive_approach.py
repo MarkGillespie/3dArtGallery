@@ -6,12 +6,12 @@ from src.point_visibility import point_visibility
   
 
   #check visibility for initial guards
-def subtractive(G, V, F):
+def subtractive(P, V, F):
   
   intersected = np.zeros(len(F), dtype=int)
   visibility = []
   
-  for p in G:
+  for p in P:
     _, p_intersected = point_visibility(p, V, F)
     visibility.append(p_intersected)
     intersected |= p_intersected
@@ -22,7 +22,7 @@ def subtractive(G, V, F):
   
   # iteratively remove guards with shared visibility
   i = 0
-  while i < len(G):
+  while i < len(P):
   
     # checks what mesh coverage would look like without guard i
     temp_intersected = np.copy(intersected)
@@ -30,11 +30,11 @@ def subtractive(G, V, F):
   
     # checks
     if temp_intersected.all():
-      G.pop(i)
+      P.pop(i)
       intersected = temp_intersected
       visibility.pop(i)
     else: 
       i += 1
-  guards = np.array(G)
+  guards = np.array(P)
 
   return guards
