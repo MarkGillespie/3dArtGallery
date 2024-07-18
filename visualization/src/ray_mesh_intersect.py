@@ -89,3 +89,54 @@ def ray_mesh_intersect_2(R_V, R_E, V, F):
     C_V = np.array(C_V)
 
     return C_V, intersected
+
+def rays_mesh_intersect(R_V, R_E, V, F):
+    """
+    Find intersection points and intersected faces
+    Support multi-colored output
+    Work best with rand_rays
+
+    Parameters
+    ----------
+    R_V
+        Numpy array of Numpy array of vertices coordinates.
+
+    R_E
+        Numpy array of numpy array of rays' edges' vertice list
+
+    V
+        Mesh's vertices' coordinates
+
+    F
+        Mesh's faces' vertices list
+
+    Returns
+    -------
+    C_V
+        numpy array of intersection points' coordinates
+        
+    intersected
+        |F| array of values each value corresponding to a color.
+    """
+
+    C_V = []
+    intersected = np.array([0] * len(F))
+
+    for k, (r_v, r_e) in enumerate(zip(R_V, R_E)):
+        new_R_V = []
+        rays = []
+        for e in r_e:
+            v = r_v[e[1]] - r_v[e[0]]
+            rays.append(v / np.linalg.norm(v))
+            new_R_V.append(r_v[e[0]])
+
+        ts, ids, _ = gpy.ray_mesh_intersect(np.array(new_R_V), np.array(rays), V, F)
+
+        for i, (t, id) in enumerate(zip(ts, ids)):
+            if id != -1:
+                intersected[id] = k
+                C_V.append(new_R_V[i] + rays[i] * t)
+
+    C_V = np.array(C_V)
+
+    return C_V, intersected

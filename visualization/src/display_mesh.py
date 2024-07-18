@@ -1,6 +1,6 @@
 import polyscope as ps
 
-def display_mesh(V, F, R_V = [], R_E = [], intersected = [], C_V = [], S_V = [], S_E = [], S_P = [], vecs = [], ray_length = 1):
+def display_mesh(V, F, R_V = [], R_E = [], sources = [], intersected = [], C_V = [], S_V = [], S_E = [], S_P = [], vecs = [], ray_length = 1):
     """
     Display the mesh
 
@@ -45,6 +45,9 @@ def display_mesh(V, F, R_V = [], R_E = [], intersected = [], C_V = [], S_V = [],
     obj = ps.register_surface_mesh('Surface', V, F, edge_width=1)
     obj.set_transparency(0.6)
 
+    if len(sources) != 0:
+        ps.register_point_cloud('Guards', sources, radius = 0.02, enabled = True)
+
     if len(intersected) != 0:
         obj.add_scalar_quantity('Intersected', intersected, defined_on='faces', cmap='reds', enabled = True)
 
@@ -52,15 +55,16 @@ def display_mesh(V, F, R_V = [], R_E = [], intersected = [], C_V = [], S_V = [],
         ps.register_point_cloud('Intersection', C_V, radius = 0.002, enabled = True)
 
     if len(R_V) != 0 and len(R_E) != 0:
-        ps.register_curve_network('THE RAY', R_V, R_E, radius = 0.0005, enabled = True)
+        for i in range(len(R_V)):
+            ps.register_curve_network('RAY ' + str(i + 1), R_V[i], R_E[i], radius = 0.0005, enabled = False)
 
     if len(S_V) != 0 and len(S_E) != 0:
         skeleton = ps.register_curve_network('Skeleton', S_V, S_E, radius = 0.001, enabled = True)
 
         if len(S_P) != 0:
-            ps.register_point_cloud('Skeleton Points Sampling', S_P, radius = 0.002, enabled = True)
+            ps.register_point_cloud('Skeleton Points Sampling', S_P, radius = 0.002, enabled = False)
 
         if len(vecs) != 0:
-            skeleton.add_vector_quantity("Random ray vector", vecs, enabled = True, radius = 0.002, length = ray_length)
+            skeleton.add_vector_quantity("Random ray vector", vecs, enabled = False, radius = 0.002, length = ray_length)
 
     ps.show()

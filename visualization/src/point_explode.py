@@ -73,8 +73,5 @@ def fibonacci_point_explode(P, num_rays = 1000):
 
         R_V.append([x, y, z])
         R_E.append([0, i + 1])
-
-    print(R_V)
-    print(R_E)
     
     return np.array(R_V), np.array(R_E)
