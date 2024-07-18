@@ -9,6 +9,8 @@ from src.random_ray_vertices import rand_ray
 from src.random_ray_vertices import rand_rays
 from src.ray_mesh_intersect import rays_mesh_intersect
 from src.point_explode import fibonacci_point_explode
+from src.point_visibility import point_visibility
+from src.point_visibility import points_visibility
 
 filename = input()
 V, F = read_mesh(filename)
@@ -19,10 +21,11 @@ vecs = rand_ray(S_V)
 R_V = []
 R_E = []
 sources = np.array([S_V[np.random.randint(len(S_V))], S_V[np.random.randint(len(S_V))], S_V[np.random.randint(len(S_V))]])
-for source in sources:
-    r_v, r_e = fibonacci_point_explode(source, 10000)
-    R_V.append(r_v)
-    R_E.append(r_e)
-C_V, intersected = rays_mesh_intersect(R_V, R_E, V, F)
+# for source in sources:
+#     r_v, r_e = fibonacci_point_explode(source, 10000)
+#     R_V.append(r_v)
+#     R_E.append(r_e)
+# C_V, intersected = rays_mesh_intersect(R_V, R_E, V, F)
+C_V, intersected = points_visibility(sources, V, F)
 
 display_mesh(V, F, C_V = C_V, intersected = intersected, R_V = R_V, R_E = R_E, S_V = S_V, S_E = S_E, S_P = S_P, vecs = vecs, ray_length = 1, sources = sources)
