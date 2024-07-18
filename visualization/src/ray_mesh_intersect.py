@@ -134,7 +134,7 @@ def rays_mesh_intersect(R_V, R_E, V, F):
 
         for i, (t, id) in enumerate(zip(ts, ids)):
             if id != -1:
-                intersected[id] = k
+                intersected[id] = k + 1
                 C_V.append(new_R_V[i] + rays[i] * t)
 
     C_V = np.array(C_V)
