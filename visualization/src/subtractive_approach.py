@@ -1,13 +1,10 @@
 import numpy as np  
 from src.point_visibility import point_visibility
 
-# get guards using ray_mesh or ray_triangle intersection module
-  
-  
 
   #check visibility for initial guards
 def subtractive(P, V, F):
-  
+  sources= P.copy()
   intersected = np.zeros(len(F), dtype=int)
   visibility = []
   
@@ -30,11 +27,11 @@ def subtractive(P, V, F):
   
     # checks
     if temp_intersected.all():
-      P.pop(i)
+      sources.pop(i)
       intersected = temp_intersected
       visibility.pop(i)
     else: 
       i += 1
-  guards = np.array(P)
+ 
 
-  return guards
+  return np.array(sources)
