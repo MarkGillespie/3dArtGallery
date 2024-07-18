@@ -1,3 +1,4 @@
+import numpy as np
 import polyscope as ps
 
 def display_mesh(V, F, R_V = [], R_E = [], sources = [], intersected = [], C_V = [], S_V = [], S_E = [], S_P = [], vecs = [], ray_length = 1):
@@ -46,10 +47,12 @@ def display_mesh(V, F, R_V = [], R_E = [], sources = [], intersected = [], C_V =
     obj.set_transparency(0.6)
 
     if len(sources) != 0:
-        ps.register_point_cloud('Guards', sources, radius = 0.02, enabled = True)
+        guards = ps.register_point_cloud('Guards', sources, radius = 0.02, enabled = True)
+        index = np.array(range(1, len(sources) + 1))
+        guards.add_scalar_quantity('Indice', index, cmap='rainbow', vminmax = (0, len(sources)), enabled = True)
 
     if len(intersected) != 0:
-        obj.add_scalar_quantity('Intersected', intersected, defined_on='faces', cmap='reds', enabled = True)
+        obj.add_scalar_quantity('Intersected', intersected, defined_on='faces', cmap='rainbow', vminmax = (0, len(sources)), enabled = True)
 
     if len(C_V) != 0:
         ps.register_point_cloud('Intersection', C_V, radius = 0.002, enabled = True)
