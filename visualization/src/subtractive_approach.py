@@ -22,7 +22,7 @@ def subtractive(G, V, F):
   
   # iteratively remove guards with shared visibility
   i = 0
-  while i < len(G):
+  while i < len(guards):
   
     # checks what mesh coverage would look like without guard i
     temp_intersected = np.copy(intersected)
