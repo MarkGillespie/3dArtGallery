@@ -12,6 +12,7 @@ from src.point_explode import fibonacci_point_explode
 from src.point_visibility import point_visibility
 from src.point_visibility import points_visibility
 from src.greedy_approach import greedy
+from src.subtractive_approach import subtractive
 
 filename = input()
 V, F = read_mesh(filename)
