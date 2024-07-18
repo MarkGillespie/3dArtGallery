@@ -1,7 +1,4 @@
-import os
 import numpy as np
-import polyscope as ps
-from src.read_skeleton import read_skeleton
 
 def rand_ray(S_V, ray_length = 1):
   """
