@@ -15,8 +15,10 @@ from src.greedy_approach import greedy
 from src.subtractive_approach import subtractive
 from src.greedy_approach import greedy_with_noise
 from src.random_points_in_mesh import random_points
+import time
 
 filename = input()
+start_time = time.time()
 V, F = read_mesh(filename)
 S_V, S_E = read_skeleton(filename)
 S_P = skeleton_points_fixed_length_sampling(S_V, S_E, 5e-3)
@@ -31,9 +33,10 @@ S_P = skeleton_points_fixed_length_sampling(S_V, S_E, 5e-3)
 #     R_E.append(r_e)
 # C_V, intersected = rays_mesh_intersect(R_V, R_E, V, F)
 # C_V, intersected = points_visibility(sources, V, F)
-P = random_points(V, F, 100)
+P = random_points(V, F, 1000)
 sources, intersected = greedy(np.concatenate((S_P, P)), V, F, accept_partial = True)
 # sources, intersected = greedy_with_noise(S_P, V, F, noise=1e-4, num_tries=100)
 # sources, intersected = subtractive(S_V, V, F)
 
+print(f'Time elapsed: {time.time() - start_time} seconds')
 display_mesh(V, F, intersected = intersected, S_V = S_V, S_E = S_E, S_P = S_P, sources = sources, available_positions = P)

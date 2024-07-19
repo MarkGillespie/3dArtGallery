@@ -15,7 +15,7 @@ def box(V):
 
     return m_x, m_y, m_z, M_x, M_y, M_z
 
-def random_points(V, F, num_points = 1000, eps = 1e-6):
+def random_points(V, F, num_points = 1000, eps = 1e-3):
 
     P = []
 
@@ -28,7 +28,10 @@ def random_points(V, F, num_points = 1000, eps = 1e-6):
 
         # print(f'{p} => {gpy.fast_winding_number(np.array([p]), V, F)}')
 
-        if gpy.fast_winding_number(np.array([p]), V, F) > 1 - eps:
+        dist, _, _ = gpy.signed_distance(np.array([p]), V, F)
+        # print(f'{p} => {dist}')
+
+        if dist[0] < -eps:
             P.append(p)
             print(f'OK {len(P)}/{num_points}')
 
