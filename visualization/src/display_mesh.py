@@ -41,6 +41,7 @@ def display_mesh(V, F, R_V = [], R_E = [], sources = [], intersected = [], C_V =
         length of vecs (default to 1)
     """
     ps.init()
+    ps.set_background_color([0., 0., 0.])
     ps.reset_camera_to_home_view()
 
     obj = ps.register_surface_mesh('Surface', V, F, edge_width=1)
@@ -49,7 +50,7 @@ def display_mesh(V, F, R_V = [], R_E = [], sources = [], intersected = [], C_V =
     if len(sources) != 0:
         guards = ps.register_point_cloud('Guards', sources, radius = 0.02, enabled = True)
         index = np.array(range(1, len(sources) + 1))
-        guards.add_scalar_quantity('Indice', index, cmap='rainbow', vminmax = (0, len(sources)), enabled = True)
+        guards.add_scalar_quantity('Index', index, cmap='rainbow', vminmax = (0, len(sources)), enabled = True)
 
     if len(intersected) != 0:
         obj.add_scalar_quantity('Intersected', intersected, defined_on='faces', cmap='rainbow', vminmax = (0, len(sources)), enabled = True)
