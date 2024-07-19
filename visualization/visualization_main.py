@@ -30,7 +30,7 @@ S_P = skeleton_points_fixed_length_sampling(S_V, S_E, 5e-3)
 # C_V, intersected = rays_mesh_intersect(R_V, R_E, V, F)
 # C_V, intersected = points_visibility(sources, V, F)
 #sources, intersected = greedy(S_V, V, F)
-sources = subtractive(S_V, V, F)
+sources, intersected = subtractive(S_V, V, F)
 
 #display_mesh(V, F, intersected = intersected, S_V = S_V, S_E = S_E, S_P = S_P, sources = sources)
 display_mesh(V, F, intersected = intersected, sources = sources)
