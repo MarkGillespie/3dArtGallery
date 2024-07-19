@@ -33,14 +33,17 @@ def subtractive(P, V, F):
       if num_inter > target_intersect:
         target_intersect= num_inter
         new_index= i
-        next_index= i+1
-        num_inter = np.dot(1 - intersected, visibility[next_index])
+        if new_index+1 != len(P):
+          next_index= i+1
+          num_inter = np.dot(1 - intersected, visibility[next_index])
         
-        if num_inter > target_intersect:
-          target_intersect= num_inter
-          sources.pop(i)
-          new_index= next_index
-        
+          if num_inter > target_intersect:
+            target_intersect= num_inter
+            sources.pop(i)
+            new_index= next_index
+        else:
+          break
+       
     if target_intersect == 0:
       sources.pop(i)
       
