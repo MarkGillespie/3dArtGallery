@@ -34,4 +34,4 @@ def subtractive(P, V, F):
       i += 1
  
 
-  return np.array(sources)
+  return np.array(sources), intersected
