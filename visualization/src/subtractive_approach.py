@@ -44,10 +44,8 @@ def subtractive(P, V, F):
     if target_intersect == 0:
       sources.pop(i)
       
-    # checks what mesh coverage would look like without guard i
-    #temp_intersected = np.copy(intersected)
-    #temp_intersected &= ~visibility[i]
-
+    for i in range(len(F)):
+      intersected[i] |= visibility[new_index][i]
  
 
   return np.array(sources), intersected
