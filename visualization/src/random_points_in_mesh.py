@@ -15,13 +15,14 @@ def box(V):
 
     return m_x, m_y, m_z, M_x, M_y, M_z
 
-def random_points(V, F, num_points = 1000, eps = 1e-3):
+def random_points(V, F, num_points = 1000, eps = 1e-3, verbose = True):
 
     P = []
 
     m_x, m_y, m_z, M_x, M_y, M_z = box(V)
 
-    print('Generating Points...')
+    if verbose:
+        print('Generating Points...')
 
     while len(P) < num_points:
         p = [np.random.rand() * (M_x - m_x) + m_x, np.random.rand() * (M_y - m_y) + m_y, np.random.rand() * (M_z - m_z) + m_z]
@@ -33,6 +34,7 @@ def random_points(V, F, num_points = 1000, eps = 1e-3):
 
         if dist[0] < -eps:
             P.append(p)
-            print(f'OK {len(P)}/{num_points}')
+            if verbose:
+                print(f'OK {len(P)}/{num_points}')
 
     return np.array(P)

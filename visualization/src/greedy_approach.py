@@ -23,7 +23,7 @@ def remove_unnecessary(sources, colors, contains_zero):
 
     return np.array(ret_sources), colors
 
-def greedy(P, V, F, accept_partial = True):
+def greedy(P, V, F, accept_partial = True, verbose = True):
     """
     Greedy approach for placing guards.
     If multiple guards cover the same amount of triangles, randomly choose one (with the help of reservoir sampling)
@@ -57,13 +57,15 @@ def greedy(P, V, F, accept_partial = True):
     used = np.array([0] * len(P))
     visibility = []
 
-    print('Calculating Visibility...')
+    if verbose:
+        print('Calculating Visibility...')
 
     for p in P:
         _, p_intersected = point_visibility(p, V, F)
         visibility.append(p_intersected)
 
-    print('Applying Greedy Algorithm...')
+    if verbose:
+        print('Applying Greedy Algorithm...')
 
     iter = 1
 
@@ -72,7 +74,9 @@ def greedy(P, V, F, accept_partial = True):
         max_index = 0
         n = 2
 
-        print(f'Iteration # {iter}')
+        if verbose:
+            print(f'Iteration # {iter}')
+
         iter += 1
         
         for i in range(len(P)):
@@ -103,13 +107,15 @@ def greedy(P, V, F, accept_partial = True):
     if not intersected.all():
         print('UNSOLVABLE')
 
-        with np.printoptions(threshold=np.inf):
-            print(colors)
+        if verbose:
+            with np.printoptions(threshold=np.inf):
+                print(colors)
 
         if not accept_partial:
             assert(False)
 
-    print('Removing Unnecessary Guards...')
+    if verbose:
+        print('Removing Unnecessary Guards...')
 
     return remove_unnecessary(np.array(sources), colors, not intersected.all())
 

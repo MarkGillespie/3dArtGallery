@@ -33,8 +33,10 @@ S_P = skeleton_points_fixed_length_sampling(S_V, S_E, 5e-3)
 #     R_E.append(r_e)
 # C_V, intersected = rays_mesh_intersect(R_V, R_E, V, F)
 # C_V, intersected = points_visibility(sources, V, F)
+P = []
 P = random_points(V, F, 1000)
-sources, intersected = greedy(np.concatenate((S_P, P)), V, F, accept_partial = True)
+sources, intersected = greedy(np.concatenate((S_V, P)), V, F, accept_partial = True)
+# sources, intersected = greedy(S_V, V, F, accept_partial = True)
 # sources, intersected = greedy_with_noise(S_P, V, F, noise=1e-4, num_tries=100)
 # sources, intersected = subtractive(S_V, V, F)
 
