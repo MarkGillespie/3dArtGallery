@@ -1,7 +1,7 @@
 import numpy as np
 import polyscope as ps
 
-def display_mesh(V, F, R_V = [], R_E = [], sources = [], intersected = [], C_V = [], S_V = [], S_E = [], S_P = [], vecs = [], ray_length = 1):
+def display_mesh(V, F, R_V = [], R_E = [], available_positions = [], sources = [], intersected = [], C_V = [], S_V = [], S_E = [], S_P = [], vecs = [], ray_length = 1):
     """
     Display the mesh
 
@@ -46,6 +46,9 @@ def display_mesh(V, F, R_V = [], R_E = [], sources = [], intersected = [], C_V =
 
     obj = ps.register_surface_mesh('Surface', V, F, edge_width=1)
     obj.set_transparency(0.6)
+
+    if len(available_positions) != 0:
+        ps.register_point_cloud('Additional Available Positions', available_positions, radius = 0.005, enabled = True)
 
     if len(sources) != 0:
         guards = ps.register_point_cloud('Guards', sources, radius = 0.02, enabled = True)

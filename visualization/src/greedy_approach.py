@@ -91,9 +91,7 @@ def greedy(P, V, F, accept_partial = True):
                 n += 1
 
         if max_intersection == 0:
-            num_tries -= 1
-            if num_tries == 0:
-                break
+            break
 
         used[max_index] = 1
         sources.append(P[max_index])
@@ -102,13 +100,18 @@ def greedy(P, V, F, accept_partial = True):
         for i in range(len(F)):
             intersected[i] |= visibility[max_index][i]
 
-    if not accept_partial and not intersected.all():
+    if not intersected.all():
         print('UNSOLVABLE')
-        assert(False)
+
+        with np.printoptions(threshold=np.inf):
+            print(colors)
+
+        if not accept_partial:
+            assert(False)
 
     print('Removing Unnecessary Guards...')
 
-    return remove_unnecessary(np.array(sources), colors, intersected.all())
+    return remove_unnecessary(np.array(sources), colors, not intersected.all())
 
 def greedy_with_noise(P, V, F, noise = 1e-6, num_tries = 5):
     """
