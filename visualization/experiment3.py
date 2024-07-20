@@ -7,7 +7,7 @@ from src.greedy_approach import greedy
 from src.random_points_in_mesh import random_points
 import time
 
-for filename in ['spider','bunny_fixed','table','lamb','pig']:
+for filename in ['bunny_fixed','table','lamb','pig']:
     V, F = read_mesh(filename)
     S_V, S_E = read_skeleton(filename)
 
